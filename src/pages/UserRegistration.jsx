@@ -46,7 +46,7 @@ const UserRegistration = () => {
                         console.log(error)
                     })
 
-                toast.success('Successfully registered')
+                toast.success('Successfully registere')
                 navigate(location?.state?.from?.pathname || '/')
                 console.log(res.user)
 
