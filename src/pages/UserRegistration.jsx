@@ -107,7 +107,7 @@ const UserRegistration = () => {
     if (loading) return <Loader></Loader>;
 
     return (
-        <div className='px-4'>
+        <div className='px-'>
             <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl m-auto form">
                 <div className="card-body">
                     <h1 className='text-center text-5xl font-bold mb-4'>Register</h1>
