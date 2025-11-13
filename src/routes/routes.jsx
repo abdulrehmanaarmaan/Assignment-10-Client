@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router";
-import RootLayout from "../main-layout/RootLayout";
+import RootLayout from "../root-layout/RootLayout";
 import Error from "../pages/Error";
 import Home from "../pages/Home";
 import UserRegistration from "../pages/UserRegistration";
@@ -8,7 +8,9 @@ import AllMovies from "../pages/AllMovies";
 import MovieDetails from "../pages/MovieDetails";
 import MyCollection from "../pages/MyCollection";
 import AddMovie from "../pages/AddMovie";
-import Delete from "../pages/Delete";
+import PrivateRoute from "../private-route/PrivateRoute";
+import UpdateMovie from "../pages/UpdateMovie";
+import MyWatchList from "../pages/MyWatchList";
 
 export const router = createBrowserRouter([
     {
@@ -19,9 +21,9 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 path: '/',
-                Component: Home
+                Component: Home,
+                loader: () => fetch('https://assignment10server-kappa.vercel.app/movies')
             },
-
             {
                 path: 'user-registration',
                 Component: UserRegistration
@@ -32,24 +34,44 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'all-movies',
-                Component: AllMovies
+                Component: AllMovies,
+                loader: () => fetch('https://assignment10server-kappa.vercel.app/movies'),
             },
             {
-                path: 'movie-details',
-                Component: MovieDetails
+                path: '/movie-details/:id',
+                element: <PrivateRoute>
+                    <MovieDetails></MovieDetails>
+                </PrivateRoute>,
+                loader: ({ params }) => fetch(`https://assignment10server-kappa.vercel.app/movies?id=${params.id}`)
             },
             {
-                path: 'my-collection',
-                Component: MyCollection
+                path: '/my-collection/:email',
+                element: <PrivateRoute>
+                    <MyCollection></MyCollection>
+                </PrivateRoute>,
+                loader: ({ params }) => fetch(`https://assignment10server-kappa.vercel.app/movies?email=${params.email}`)
             },
             {
                 path: 'add-movie',
-                Component: AddMovie
+                element: <PrivateRoute>
+                    <AddMovie></AddMovie>
+                </PrivateRoute>
             },
             {
-                path: 'delete',
-                Component: Delete
+                path: 'update-movie/:id',
+                element: <PrivateRoute>
+                    <UpdateMovie></UpdateMovie>
+                </PrivateRoute>,
+                loader: ({ params }) => fetch(`https://assignment10server-kappa.vercel.app/movies?id=${params.id}`)
+            },
+            {
+                path: 'My-WatchList',
+                element: <PrivateRoute>
+                    <MyWatchList></MyWatchList>
+                </PrivateRoute>,
+                loader: () => fetch('https://assignment10server-kappa.vercel.app/WatchList')
             }
+
         ]
     },
 ]);

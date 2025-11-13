@@ -1,2 +1,113 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+/* .menu a.active { */
+/* @apply text-blue-600 font-bold */
+/* } */
+/*  */
+/* .navbar-end button { */
+/* @apply text-blue-600 font-bold */
+/* } */
+/*  */
+/* .navbar-end a.active { */
+/* @apply text-blue-600 font-bold */
+/* } */
+
+header a.active {
+  @apply text-blue-600 font-bold
+}
+
+body {
+  /* background-color: #ffffff; */
+  /* color: #111111; */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/*  Dark mode  */
+
+body.dark-theme .navigate {
+  color: deepskyblue
+}
+
+body.dark-theme .btn {
+  background-color: #333;
+  color: #fff;
+}
+
+body.dark-theme .navbar {
+  background-color: #1e1e1e;
+}
+
+body.dark-theme .navbar a {
+  color: white;
+}
+
+body.dark-theme .navbar a.active {
+  color: deepskyblue;
+}
+
+body.dark-theme .navbar button {
+  /* background-color: gray; */
+}
+
+body.dark-theme .main {
+  background-color: blue;
+  color: white;
+}
+
+body.dark-theme .movie {
+  color: white;
+  background-color: black;
+}
+
+body.dark-theme .sensitive-btn {
+  background-color: red;
+  color: black
+}
+
+body.dark-theme .detail {
+  color: deepskyblue
+}
+
+body.dark-theme .non-sensitive-btn {
+  color: black;
+  background-color: deepskyblue;
+}
+
+body.dark-theme .menu {
+  background-color: #222;
+}
+
+body.dark-theme .form {
+  background-color: black;
+  color: white
+}
+
+body.dark-theme .form button {
+  background-color: white;
+  color: black
+}
+
+body.dark-theme input {
+  color: black
+}
+
+body.dark-theme .label {
+  color: white
+}
+
+body.dark-theme .modal {
+  color: black;
+}
+
+body.dark-theme .feature {
+  color: greenyellow
+}
+
+body.dark-theme .platform {
+  color: orange
+}
+
+body.dark-theme .error {
+  color: red
+}
