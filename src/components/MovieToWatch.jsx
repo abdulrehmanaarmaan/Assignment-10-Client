@@ -51,7 +51,7 @@ const MovieToWatch = ({ movies, setMovies, movieToWatch }) => {
                             <h1 className='text-yellow-500'>{rating}</h1>
                         </div>
 
-                        <h1>{duration} min</h1>
+                        <h1>{duration} mi</h1>
                     </div>
                 </div>
             </aside>
