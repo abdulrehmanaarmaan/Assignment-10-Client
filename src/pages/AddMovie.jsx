@@ -50,10 +50,10 @@ const AddMovie = () => {
 
         axiosPublic.post(`/movies?email=${user?.email}`, newMovie)
             .then(res => {
-                stopLoading()
                 toast.success('Successfully added')
                 // event.target.reset()
                 navigate(`/my-collection/${user?.email}`)
+                stopLoading()
                 console.log(res)
             })
             .catch(error => {

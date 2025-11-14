@@ -45,6 +45,7 @@ const AllMovies = () => {
         }
 
         else {
+            stopLoading()
             updatedGenres = selectedGenres.filter(g => g !== genre);
             toast.success('Successfully filtered')
         }

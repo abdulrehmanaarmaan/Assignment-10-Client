@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import React, { use, useEffect } from 'react';
 import { useLoaderData, useNavigate } from 'react-router';
 import star from '../assets/star.png';
 import { NavLink } from 'react-router';
@@ -18,13 +18,26 @@ const MovieDetails = () => {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        startLoading()
+        axiosPublic.get(`/movies?id=${_id}`)
+            .then(res => {
+                stopLoading()
+                console.log(res)
+            })
+            .catch(error => {
+                stopLoading()
+                console.log(error)
+            })
+    }, [axiosPublic, _id])
+
     const handleDeleteMovie = () => {
         startLoading()
         axiosPublic.delete(`/movies/${_id}`)
             .then(res => {
-                stopLoading()
                 toast.success('Successfully deleted')
                 navigate('/all-movies')
+                stopLoading()
                 console.log(res)
             })
             .catch(error => {
@@ -55,9 +68,9 @@ const MovieDetails = () => {
 
         axiosPublic.post('/WatchList', movieToAdd)
             .then(res => {
-                stopLoading()
                 toast.success('Successfully added to your WatchList')
                 navigate('/My-WatchList')
+                stopLoading()
                 console.log(res)
             })
             .catch(error => {
