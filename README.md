@@ -1,16 +1,15 @@
-# React + Vite
+Name: MovieMaster Pro
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Live Site URL: https://assignment-10-7ce57.web.app/
 
-Currently, two official plugins are available:
+Features:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* Dynamic Movie Management - Add, edit, delete and explore movies stored in a real MongoDB database with full CRUD functionality.
 
-## React Compiler
+* Advanced Filtering System - Filter movies by genres, rating range, release year and more-powered by MongoDB's efficient query operators.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* Featured Movies Carousel - Automatically rotates highlighted movies with smooth animations for an engaging user experience.
 
-## Expanding the ESLint configuration
+* Theme Toggle (Light/Dark Mode) - Persistent theme switching using localstorage to give users a personalized experience.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* Optimized User Interface - Responsive design built with Tailwind CSS, ensuring fast performance and a clean, modern layout across all devices. 
