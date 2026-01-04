@@ -1,4 +1,4 @@
-import React, { use, useEffect } from 'react';
+import React, { use } from 'react';
 import { useLoaderData, useNavigate } from 'react-router';
 import star from '../assets/star.png';
 import { NavLink } from 'react-router';
@@ -18,18 +18,18 @@ const MovieDetails = () => {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        startLoading()
-        axiosPublic.get(`/movies?id=${_id}`)
-            .then(res => {
-                stopLoading()
-                console.log(res)
-            })
-            .catch(error => {
-                stopLoading()
-                console.log(error)
-            })
-    }, [axiosPublic, _id])
+    // useEffect(() => {
+    // startLoading()
+    // axiosPublic.get(`/movies?id=${_id}`)
+    // .then(res => {
+    // console.log(res)
+    // stopLoading()
+    // })
+    // .catch(error => {
+    // console.log(error)
+    // stopLoading()
+    // })
+    // }, [axiosPublic, _id])
 
     const handleDeleteMovie = () => {
         startLoading()
@@ -69,7 +69,7 @@ const MovieDetails = () => {
         axiosPublic.post('/WatchList', movieToAdd)
             .then(res => {
                 toast.success('Successfully added to your WatchList')
-                navigate('/My-WatchList')
+                navigate('/dashboard/My-WatchList')
                 stopLoading()
                 console.log(res)
             })
@@ -84,15 +84,15 @@ const MovieDetails = () => {
 
     return (
         <div>
-            <h1 className='font-bold text-[48px] mb-10 text-center'>Details</h1>
+            <h1 className='text-3xl font-semibold text-gray-800 tracking-tight mb-6 text-center route-title'>Details</h1>
 
-            <section className='flex flex-col lg:flex-row items-center max-w-[1493px] mx-auto font-bold gap-10 px-4'>
-                <img className='max-w-full w-full md:max-w-[600px] md:w-[600px] md:max-h-[600px] rounded-lg' src={posterUrl} alt="" />
+            <section className='flex flex-col lg:flex-row max-w-5xl mx-auto font-bold lg:gap-10 md:gap-8 gap-6 px-4 items-center'>
+                <img className='w-full rounded-lg h-[200px] md:h-[400px] max-w-xs md:max-w-md' src={posterUrl} alt={`Poster of ${title}`} loading='lazy' />
 
                 <section className='space-y-[30px] text-center lg:text-left'>
-                    <h1 className='text-[32px]'>{title}</h1>
+                    <h1 className='text-2xl'>{title}</h1>
 
-                    <div className='flex flex-col lg:flex-row items-center gap-10 text-2xl'>
+                    <div className='flex flex-wrap justify-center lg:justify-start items-center gap-4 md:text-xl text-lg font-medium text-gray-700 movie-details'>
                         <h1>{releaseYear}</h1>
 
                         <h1>{duration} min</h1>
@@ -104,35 +104,35 @@ const MovieDetails = () => {
                         <h1>{country}</h1>
                     </div>
 
-                    {director.includes(',') ? <h1 className='text-2xl'>Directors: <span className='text-blue-400 detail'>{director}</span></h1> : <h1 className='text-2xl'>Director: <span className='text-blue-400 detail'>{director}</span></h1>}
+                    {director.includes(',') ? <p className='text-lg text-gray-700 movie-details'>Directors: <span className='text-blue-500 detail'>{director}</span></p> : <p className='text-lg text-gray-700 movie-details'>Director: <span className='text-blue-500 detail'>{director}</span></p>}
 
-                    <h1 className='text-2xl'>Cast: <span className='text-blue-400 detail'>{cast}</span></h1>
+                    <p className='text-lg text-gray-700 movie-details'>Cast: <span className='text-blue-500 detail'>{cast}</span></p>
 
-                    <div className='flex items-center gap-4 text-yellow-500 text-xl justify-center lg:justify-normal'>
-                        <span>
-                            <img className='max-w-5' src={star} alt="" />
+                    <div className='flex items-center gap-2 text-yellow-500 justify-center lg:justify-start'>
+                        <span aria-label='rating'>
+                            <img className='w-5 h-5' src={star} alt="Star icon" />
                         </span>
 
-                        <h1>{rating}</h1>
+                        <span className='text-lg font-semibold'>{rating}</span>
                     </div>
 
-                    <p className='text-lg'>{plotSummary}</p>
+                    <p className='text-base md:text-lg leading-relaxed max-w-3xl'>{plotSummary}</p>
 
-                    <div className='text-xl flex flex-col md:flex-row gap-10 justify-center lg:justify-normal mt-20'>
-                        <NavLink className='text-center text-white py-3 rounded-sm bg-blue-400 lg:max-w-[100px] lg:w-[100px] non-sensitive-btn max-w-full w-full ' to={`/update-movie/${_id}`}>Edit</NavLink>
+                    <div className='flex flex-col md:flex-row gap-4 justify-center lg:justify-start mt-6'>
+                        <NavLink className='text-center form-btn shadow-none py-3 md:w-[120px] w-full hover:cursor-pointer font-normal' to={`/dashboard/update-movie/${_id}`}>Edit</NavLink>
 
-                        <button onClick={() => document.getElementById('my_modal_5').showModal()} className='text-white py-3 rounded-sm bg-red-400 lg:max-w-[100px] lg:w-[100px] hover:cursor-pointer sensitive-btn max-w-full w-full'>Delete</button>
+                        <button onClick={() => document.getElementById('my_modal_5').showModal()} className='text-white rounded-md bg-red-500 hover:bg-red-600 md:w-[120px] hover:cursor-pointer w-full py-3 sensitive-btn font-normal'>Delete</button>
 
-                        <button onClick={handleAddToWatchList} className='text-white py-3 rounded-sm bg-blue-400 lg:max-w-[202px] lg:w-[202px] max-w-full w-full hover:cursor-pointer non-sensitive-btn'>Add To WatchList</button>
+                        <button onClick={handleAddToWatchList} className='shadow-none py-3 form-btn md:w-[220px] w-full hover:cursor-pointer font-normal'>Add To WatchList</button>
                     </div>
                     <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-                        <div className="modal-box">
+                        <div className="modal-box modal-class">
                             <p className="py-4">Are you sure that you want to delete this movie?</p>
                             <div className="modal-action">
                                 <form method="dialog" className='space-x-4'>
                                     {/* if there is a button in form, it will close the modal */}
                                     <button className="btn">Cancel</button>
-                                    <button onClick={handleDeleteMovie} className='btn'>Delete</button>
+                                    <button onClick={handleDeleteMovie} className='btn sensitive-btn'>Delete</button>
                                 </form>
                             </div>
                         </div>

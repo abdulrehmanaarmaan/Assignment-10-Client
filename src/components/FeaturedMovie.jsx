@@ -6,13 +6,18 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import Loader from './Loader';
 
-const FeaturedMovie = ({ threeMostRatedMovies }) => {
+const FeaturedMovie = ({ threeMostRatedMovies, loading }) => {
 
     return (
         <Swiper
-            modules={[Navigation, Pagination, Autoplay]}
-            spaceBetween={30}
+            modules={[Pagination, Autoplay]}
+            breakpoints={{
+                640: { spaceBetween: 20 },
+                768: { spaceBetween: 30 },
+                1024: { spaceBetween: 40 }
+            }}
             slidesPerView={1}
             navigation
             pagination={{ clickable: true }}
@@ -20,14 +25,15 @@ const FeaturedMovie = ({ threeMostRatedMovies }) => {
             loop={true}
             className="mySwiper">
 
-            {
-                threeMostRatedMovies.map(mostRatedMovie => <SwiperSlide>
-                    <div className='px-4 max-h-fit'>
-                        <img className='max-w-full w-full md:max-w-[400px] md:w-[400px] rounded-lg md:max-h-[400px] h-[400px] mx-auto mb-4 max-h-1/2' src={mostRatedMovie.posterUrl} alt="" />
-                        <h1 className='font-bold text-xl text-center'>{mostRatedMovie.title}</h1>
+            {loading ? <Loader></Loader> :
+                threeMostRatedMovies.map(mostRatedMovie => <SwiperSlide aria-label={`Featured Movie: ${mostRatedMovie?.title}`}>
+                    <div className='px-4'>
+
+                        <img className='w-full max-w-xs md:max-w-md rounded-lg h-[200px] md:h-[400px] mx-auto mb-4 object-cover aspect-[2/3]' src={mostRatedMovie.posterUrl} alt={`${mostRatedMovie?.title} Poster`} />
+
+                        <h1 className='font-bold text-xl md:text-2xl text-center truncate mb-8'>{mostRatedMovie.title}</h1>
                     </div>
-                </SwiperSlide>)
-            }
+                </SwiperSlide>)}
         </Swiper >
     );
 };

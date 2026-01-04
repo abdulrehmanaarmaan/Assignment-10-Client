@@ -16,7 +16,7 @@ const PrivateRoute = ({ children }) => {
         return <Loader></Loader>
     }
 
-    return <Navigate state={{ from: location }} replace to='/user-login'></Navigate>
+    return <Navigate state={location.pathname} to='/user-login'></Navigate>
 };
 
 export default PrivateRoute;

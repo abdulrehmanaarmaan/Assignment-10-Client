@@ -10,26 +10,39 @@ const Footer = () => {
             <nav>
                 <h6 className="footer-title">Quick Links</h6>
 
-                <div className='flex items-center justify-center'>
-                    <NavLink className='link link-hover mr-8' to='/'>Home</NavLink>
-                    <NavLink className='link link-hover' to='all-movies'>All Movies</NavLink>
+
+                <div className='flex items-center justify-center text-sm gap-8'>
+                    <NavLink to='/'>Home</NavLink>
+                    <NavLink to='/about'>About</NavLink>
+                    <NavLink to='/help-support'>Help/Support</NavLink>
+                    <NavLink to='/all-movies'>All Movies</NavLink>
                 </div>
             </nav>
 
             <nav>
                 <h6 className="footer-title mb-3">Social Media Icons</h6>
 
-                <div className='flex gap-8 justify-center items-center'>
-                    <a className='link'><FaFacebookF /></a>
-                    <a className='link'><GrInstagram /></a>
-                    <a className='link'><FaXTwitter /></a>
-                    <a className='link'><TfiLinkedin /></a>
+                <div className='flex gap-8 justify-center items-center text-sm'>
+                    <a className='link' href='https://www.facebook.com/'><FaFacebookF /></a>
+                    <a className='link' href='https://www.instagram.com/'><GrInstagram /></a>
+                    <a className='link' href='https://www.linkedin.com/feed/'><TfiLinkedin /></a>
                 </div>
             </nav>
 
+            <nav>
+                <h6 className="footer-title">Contact</h6>
+
+                <div className="space-y-2 text-sm">
+                    <p>Email: <a href="mailto:support@moviemasterpro.com">support@moviemasterpro.com</a></p>
+                    <p>Phone: <a href="tel:+8801337910777">+880 1337 910777</a></p>
+                    <p>Location: Chittagong, Bangladesh</p>
+                </div>
+            </nav>
+
+
             <nav className='mx-auto'>
                 <h6 className="footer-title">Copyright</h6>
-                <a className='link link-hover'>Copyright © {new Date().getFullYear()} - All right reserved by ACME Industries Ltd</a>
+                <p className="text-sm">Copyright © {new Date().getFullYear()} - All right reserved by ACME Industries Ltd</p>
             </nav>
         </div>
     );

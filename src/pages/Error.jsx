@@ -6,7 +6,7 @@ const Error = () => {
     return (
         <div>
             <Navbar></Navbar>
-            <div className='py-20 text-center min-h-screen font-bold main bg-blue-50'>
+            <div className='py-12 text-center min-h-screen font-bold main bg-gray-50'>
                 <h1 className='text-7xl md:text-8xl text-blue-700 mb-[30px] error'>404</h1>
 
                 <p className='mb-4 text-4xl md:text-6xl'>Oops, page not found!</p>
@@ -14,7 +14,6 @@ const Error = () => {
                 <p>The page you are looking for is not available.</p>
             </div>
             <Footer></Footer>
-
         </div >
     );
 };

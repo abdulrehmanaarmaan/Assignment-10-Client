@@ -1,12 +1,13 @@
 import React, { use } from 'react';
-import star from '../assets/star.png'
 import { AuthContext } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
-import useLoader from '../hooks/useLoader';
+// import useLoader from '../hooks/useLoader';
 import Loader from './Loader';
 
-const MovieToWatch = ({ movies, setMovies, movieToWatch }) => {
-    const { loading, startLoading, stopLoading } = useLoader();
+const MovieToWatch = ({ movies, setMovies, movieToWatch, selectedMovieId, setSelectedMovieId, startLoading, stopLoading }) => {
+    // const [loading, setLoading] = useState(false);
+
+    // const { loading, startLoading, stopLoading } = useLoader();
 
     const { _id, posterUrl, title, releaseYear, rating, duration } = movieToWatch;
 
@@ -15,62 +16,73 @@ const MovieToWatch = ({ movies, setMovies, movieToWatch }) => {
     const handleRemoveMovie = () => {
         startLoading()
 
-        axiosPublic.delete(`/WatchList/${_id}`)
+        if (!selectedMovieId) return;
+
+        // setLoading(true)
+
+        axiosPublic.delete(`/WatchList/${selectedMovieId}`)
             .then(res => {
-                stopLoading()
-                const remainingMovies = movies.filter(movie => movie._id !== _id);
-                setMovies(remainingMovies)
-                toast.success('Successfully removed from your WatchList')
                 console.log(res)
+
+                const remainingMovies = movies.filter(movie => movie._id !== selectedMovieId);
+
+                setMovies(remainingMovies)
+
+                setSelectedMovieId(null)
+
+                // setLoading(false)
+                stopLoading()
+
+                toast.success('Successfully removed')
             })
             .catch(error => {
-                stopLoading()
-                toast.error(error.message)
                 console.log(error)
+
+                // setLoading(false)
+                stopLoading()
+
+                toast.error(error.message)
             })
     }
 
-    if (loading) return <Loader></Loader>
+    // if (loading) return <Loader></Loader>
 
     return (
-        <div className='max-w-[1440px] rounded-sm p-4 flex flex-col gap-4 md:gap-0 md:flex-row md:justify-between justify-normal items-center bg-white mx-auto movie'>
-            <aside className='flex flex-col md:flex-row items-center gap-4 max-w-full w-full md:max-w-fit md:w-fit'>
-                <img className='max-w-full w-full md:max-w-20 md:w-20 max-h-[1%] md:max-h-20 md:h-20 rounded-lg' src={posterUrl} alt="" />
+        <tr className='w-full lg-w-auto form'>
+            < td >
+                <img
+                    src={posterUrl}
+                    alt="Movie Poster"
+                    className="mask mask-squircle h-12 w-12" />
+            </td >
+            <td className='font-medium whitespace-nowrap'>{title}</td>
+            <td>
+                <button className="">{releaseYear}</button>
+            </td>
+            <td className=''>{rating}</td>
+            <td>{duration} min</td>
+            <td className='flex gap-3 justify-center items-center py-6 min-w-[150px]'>
+                <button className="btn btn-sm btn-error text-white sensitive-btn" onClick={() => {
+                    setSelectedMovieId(_id)
 
-                <div className='space-y-4 text-center md:text-left max-w-full w-full md:w-fit md:max-w-fit'>
-                    <h1 className='font-bold text-xl'>{title}</h1>
-
-                    <div className='flex justify-between md:justify-normal gap-0 md:gap-4 items-center font-bold max-w-full w-full md:max-w-fit md:w-fit'>
-                        <h1>{releaseYear}</h1>
-
-                        <div className='flex items-center gap-1'>
-                            <span className='max-w-4 max-h-4'>
-                                <img className='w-full h-full' src={star} alt="" />
-                            </span>
-
-                            <h1 className='text-yellow-500'>{rating}</h1>
-                        </div>
-
-                        <h1>{duration} min</h1>
-                    </div>
-                </div>
-            </aside>
-
-            <button onClick={() => document.getElementById('my_modal_5').showModal()} className='text-white py-3 rounded-sm bg-red-400 max-w-full w-full md:max-w-[100px] md:w-[100px] hover:cursor-pointer font-bold sensitive-btn '>Remove</button>
-
-            <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-                <div className="modal-box">
-                    <p className="py-4 font-bold text-xl">Are you sure that you want to remove this movie from your WatchList?</p>
+                    document.getElementById('my_modal_5').showModal()
+                }}>Remove</button>
+            </td>
+            {/* Open the modal using document.getElementById('ID').showModal() method */}
+            {/* Open the modal using document.getElementById('ID').showModal() method */}
+            <dialog id='my_modal_5' className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box modal-class">
+                    <p className="py-4 text-left">Are you sure you want to remove this movie from your WatchList?</p>
                     <div className="modal-action">
-                        <form method="dialog" className='space-x-4'>
+                        <form method="dialog" className='flex gap-3'>
                             {/* if there is a button in form, it will close the modal */}
-                            <button className="btn">Cancel</button>
-                            <button onClick={handleRemoveMovie} className='btn'>Remove</button>
+                            <button className="btn btn-sm btn-error text-white sensitive-btn" onClick={handleRemoveMovie}>Remove</button>
+                            <button className="btn btn-sm btn-outline">Cancel</button>
                         </form>
                     </div>
                 </div>
             </dialog>
-        </div>
+        </tr >
     );
 };
 

@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router";
-import RootLayout from "../root-layout/RootLayout";
+import RootLayout from "../layouts/RootLayout";
 import Error from "../pages/Error";
 import Home from "../pages/Home";
 import UserRegistration from "../pages/UserRegistration";
@@ -11,6 +11,12 @@ import AddMovie from "../pages/AddMovie";
 import PrivateRoute from "../private-route/PrivateRoute";
 import UpdateMovie from "../pages/UpdateMovie";
 import MyWatchList from "../pages/MyWatchList";
+import DashboardLayout from "../layouts/DashboardLayout";
+import DashboardError from "../pages/DashboardError";
+import Profile from "../pages/Profile";
+import Analytics from "../pages/Analytics";
+import About from "../pages/About";
+import HelpSupport from "../pages/HelpSupport";
 
 export const router = createBrowserRouter([
     {
@@ -45,7 +51,21 @@ export const router = createBrowserRouter([
                 loader: ({ params }) => fetch(`https://assignment10server-kappa.vercel.app/movies?id=${params.id}`)
             },
             {
-                path: '/my-collection/:email',
+                path: '/about',
+                Component: About
+            },
+            {
+                path: '/help-support',
+                Component: HelpSupport
+            }
+        ]
+    },
+    {
+        path: '/dashboard',
+        Component: DashboardLayout,
+        children: [
+            {
+                path: 'my-collection/:email',
                 element: <PrivateRoute>
                     <MyCollection></MyCollection>
                 </PrivateRoute>,
@@ -70,8 +90,24 @@ export const router = createBrowserRouter([
                     <MyWatchList></MyWatchList>
                 </PrivateRoute>,
                 loader: () => fetch('https://assignment10server-kappa.vercel.app/WatchList')
+            },
+            {
+                path: 'profile',
+                element: <PrivateRoute>
+                    <Profile></Profile>
+                </PrivateRoute>
+            },
+            {
+                path: 'analytics',
+                element: <PrivateRoute>
+                    <Analytics></Analytics>
+                </PrivateRoute>,
+                loader: () => fetch('https://assignment10server-kappa.vercel.app/movies')
+            },
+            {
+                path: '*',
+                Component: DashboardError
             }
-
         ]
-    },
+    }
 ]);

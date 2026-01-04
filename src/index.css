@@ -13,8 +13,20 @@
 /* @apply text-blue-600 font-bold */
 /* } */
 
+body {
+  font-family: "Nunito Sans", sans-serif;
+}
+
 header a.active {
-  @apply text-blue-600 font-bold
+  @apply text-teal-600 font-semibold
+}
+
+header a {
+  @apply text-gray-600 hover:text-teal-500 transition
+}
+
+.dark-theme header a {
+  @apply text-gray-300
 }
 
 body {
@@ -25,105 +37,250 @@ body {
 
 /*  Dark mode  */
 
-body.dark-theme .navigate {
-  color: deepskyblue
+/* .dark-theme .navigate { */
+/* color: deepskyblue */
+/* } */
+
+/* body.dark-theme .btn { */
+/* background-color: #333; */
+/* color: #fff; */
+/* } */
+
+.dark-theme .navbar {
+  @apply bg-gray-800 border-b border-gray-100
 }
 
-body.dark-theme .btn {
-  background-color: #333;
-  color: #fff;
+.dark-theme .navbar a {
+  @apply text-gray-100 hover:text-teal-300;
 }
 
-body.dark-theme .navbar {
-  background-color: #1e1e1e;
+.dark-theme .navbar a.active {
+  @apply text-teal-400;
 }
 
-body.dark-theme .navbar a {
-  color: white;
+.dark-theme .btn {
+  @apply text-gray-100 bg-gray-800 hover:bg-gray-900 border border-gray-100
 }
 
-body.dark-theme .navbar a.active {
-  color: deepskyblue;
+.dark-theme .main {
+  @apply bg-gray-900 text-white;
 }
 
-body.dark-theme .navbar button {
-  /* background-color: gray; */
+/* body.dark-theme .movie { */
+/* color: white; */
+/* background-color: black; */
+/* } */
+
+.dark-theme .route-title {
+  @apply text-gray-200
 }
 
-body.dark-theme .main {
-  background-color: blue;
-  color: white;
+.dark-theme .exceptional-title {
+  @apply text-gray-100
 }
 
-body.dark-theme .movie {
-  color: white;
-  background-color: black;
+/* body.dark-theme .sensitive-btn { */
+/* background-color: red; */
+/* color: black */
+/* } */
+
+.dark-theme .detail {
+  @apply text-blue-400
 }
 
-body.dark-theme .sensitive-btn {
-  background-color: red;
-  color: black
+/* body.dark-theme .non-sensitive-btn { */
+/* color: black; */
+/* background-color: deepskyblue; */
+/* } */
+
+.dark-theme .sensitive-btn {
+  @apply bg-red-600 hover:bg-red-500 border-none
 }
 
-body.dark-theme .detail {
-  color: deepskyblue
+.dark-theme .dropdown-content {
+  @apply bg-gray-800
 }
 
-body.dark-theme .non-sensitive-btn {
-  color: black;
-  background-color: deepskyblue;
+.dark-theme .dropdown-content a {
+  @apply hover:bg-gray-700
 }
 
-body.dark-theme .menu {
-  background-color: #222;
+.dark-theme .form {
+  @apply bg-gray-800 border border-gray-700
 }
 
-body.dark-theme .form {
-  background-color: black;
-  color: white
+.dark-theme .input {
+  @apply text-gray-100 bg-gray-700
 }
 
-body.dark-theme .form button {
-  background-color: white;
-  color: black
+.dark-theme .file-input {
+  @apply bg-gray-700 text-gray-100
 }
 
-body.dark-theme input {
-  color: black
+/* .dark-theme .modal { */
+/* color: black; */
+/* } */
+
+.dark-theme .feature {
+  @apply text-green-400
 }
 
-body.dark-theme .label {
-  color: white
-}
-
-body.dark-theme .modal {
-  color: black;
-}
-
-body.dark-theme .feature {
-  color: greenyellow
-}
-
-body.dark-theme .platform {
-  color: orange
+.dark-theme .platform {
+  @apply text-red-400
 }
 
 body.dark-theme .error {
-  color: red
+  @apply text-red-700
 }
 
-body .form {
-  background-color: white;
+.form {
+  @apply bg-white border border-gray-300 rounded-lg
+}
+
+.form .input {
+  @apply rounded-md
+}
+
+.form .file-input {
+  @apply rounded-md
 }
 
 body {
-  color: black;
+  @apply text-black
 }
 
-body .navbar a.active {
-  color: blue
+.navbar a.active {
+  @apply text-teal-600
 }
 
-body .input {
-  background-color: white;
+.input {
+  @apply bg-white
 }
+
+.dropdown a:hover {
+  @apply hover:bg-gray-200
+}
+
+.navbar-end .dropdown a {
+  @apply py-1 rounded-sm
+}
+
+.dark-theme .navbar-end .dropdown a {
+  @apply hover:bg-gray-700
+}
+
+.dark-theme .drawer-side ul a.active {
+  @apply bg-gray-300
+}
+
+.dark-theme .drawer-side ul a span {
+  @apply hover:text-teal-300
+}
+
+.dark-theme .drawer-side ul a.active {
+  @apply bg-gray-600
+}
+
+.dark-theme .drawer-side ul a.active span {
+  @apply text-teal-400
+}
+
+.dark-theme .sidebar {
+  @apply bg-gray-700
+}
+
+.drawer-content .dropdown a {
+  @apply py-1 rounded-sm hover:text-teal-500
+}
+
+.dark-theme .drawer .dropdown a {
+  @apply hover:text-teal-400 hover:bg-gray-700
+}
+
+.dark-theme .drawer .dropdown a.active {
+  @apply text-teal-300
+}
+
+.drawer-content .dropdown a.active {
+  @apply text-teal-600
+}
+
+.form-btn {
+  @apply rounded-md bg-teal-600 hover:bg-teal-700 border-none text-white shadow-md font-normal
+}
+
+.dark-theme .web-logo {
+  @apply text-teal-400
+}
+
+.dark-theme .logo-text {
+  @apply from-teal-300 to-blue-400
+}
+
+.dark-theme .form-btn {
+  @apply bg-teal-400 hover:bg-teal-600
+}
+
+.dark-theme {
+  @apply text-gray-100
+}
+
+.dark-theme .movie-card {
+  @apply bg-gray-800 border-gray-700
+}
+
+.dark-theme .movie-data {
+  @apply text-gray-400
+}
+
+.dark-theme .movie-details {
+  @apply text-gray-300
+}
+
+.dark-theme .headings-row {
+  @apply bg-gray-900
+}
+
+.dark-theme .table-border {
+  @apply border-t border-gray-700
+}
+
+.dark-theme .modal-class {
+  @apply bg-gray-800 border border-gray-700 text-gray-100
+}
+
+.dark-theme .grid-img {
+  @apply border-gray-700
+}
+
+.dark-theme .web-app {
+  @apply text-gray-300
+}
+
+.dark-theme .genre-bg {
+  @apply bg-gray-800 text-gray-300
+}
+
+.dark-theme .secondary-btn {
+  @apply border border-teal-400 text-teal-400 hover:text-teal-600 bg-transparent
+}
+
+.navbar-start .dropdown a {
+  @apply w-full text-center py-1 rounded-sm
+}
+
+.dark-theme .navbar-start .dropdown a {
+  @apply hover:bg-gray-700
+}
+
+.dark-theme .support {
+  @apply border border-gray-700
+}
+
+/* .dark-theme .navbar-center { */
+/* @apply bg-transparent */
+/* } */
+
+/* .drawer-side ul a { */
+/* @apply hover:bg-gray-200 */
+/* } */

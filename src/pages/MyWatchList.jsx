@@ -14,6 +14,8 @@ const MyWatchList = () => {
 
     const { loading, startLoading, stopLoading } = useLoader();
 
+    const [selectedMovieId, setSelectedMovieId] = useState(null);
+
     useEffect(() => {
         startLoading()
         axiosPublic.get('/movies/WatchList')
@@ -27,21 +29,35 @@ const MyWatchList = () => {
             })
     }, [axiosPublic])
 
-    if (loading) return <Loader></Loader>
+    return (
+        <div>
+            <h1 className='text-3xl font-semibold text-gray-800 tracking-tight mb-6 text-center route-title'>My WatchList</h1>
 
-    else {
-        return (
-            <div>
-                <h1 className='font-bold text-[48px] mb-10 text-center'>My WatchList</h1>
+            {movies.length === 0 ? <p className='text-2xl font-bold mb-6 text-center text-gray-600 movie-data'>No movies added to WatchList yet</p> :
 
-                {movies.length === 0 ? <p className='text-3xl text-center font-bold'>No movies present here.</p> : <section className='space-y-6 md:space-y-4 px-4'>
-                    {
-                        movies.map(movieToWatch => <MovieToWatch movies={movies} setMovies={setMovies} movieToWatch={movieToWatch} key={movieToWatch._id}></MovieToWatch>)
-                    }
-                </section>}
-            </div>
-        );
-    }
+                <div className="shadow-sm overflow-x-auto w-full">
+                    <table className="table text-center border-t border-gray-300 rounded-none w-full table-border">
+                        {/* head */}
+                        <thead className='bg-gray-100 text-gray-600 movie-data headings-row'>
+                            <tr>
+                                <th>Movie Poster</th>
+                                <th>Name</th>
+                                <th>Release Year</th>
+                                <th>Rating</th>
+                                <th>Duration</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody className='w-full'>
+                            {loading ? <Loader></Loader> : movies.map(movieToWatch =>
+
+                                <MovieToWatch movies={movies} setMovies={setMovies} movieToWatch={movieToWatch} key={movieToWatch._id} selectedMovieId={selectedMovieId} setSelectedMovieId={setSelectedMovieId} startLoading={startLoading} stopLoading={stopLoading}></MovieToWatch>
+                            )}
+                        </tbody>
+                    </table>
+                </div>}
+        </div>
+    );
 };
 
 export default MyWatchList;
