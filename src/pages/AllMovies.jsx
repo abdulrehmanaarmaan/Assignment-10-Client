@@ -13,12 +13,21 @@ const AllMovies = () => {
 
     const [filteredMovies, setFilteredMovies] = useState(allMovies);
     const [selectedGenres, setSelectedGenres] = useState([]);
-    const [showFilters, setShowFilters] = useState(false); // ⭐ mobile toggle
+    const [showFilters, setShowFilters] = useState(false);
 
     const genres = [
         'Sci-Fi', 'Action', 'Thriller', 'Drama', 'Crime',
         'Adventure', 'Romance', 'Animation', 'Fantasy',
         'Biography', 'History'
+    ];
+
+    // ⭐ Rating presets for horizontal scroll
+    const ratingRanges = [
+        { label: '8+ Rating', min: 8, max: 10 },
+        { label: '7+ Rating', min: 7, max: 10 },
+        { label: '6+ Rating', min: 6, max: 10 },
+        { label: '5+ Rating', min: 5, max: 10 },
+        { label: 'Below 5', min: 0, max: 4.9 }
     ];
 
     // ================= GENRE FILTER =================
@@ -39,7 +48,7 @@ const AllMovies = () => {
         if (updatedGenres.length === 0) {
             setFilteredMovies(allMovies);
             stopLoading();
-            toast.success('Successfully filtered');
+            toast.success('Filter updated');
             return;
         }
 
@@ -49,7 +58,7 @@ const AllMovies = () => {
             .then(res => {
                 setFilteredMovies(res?.data);
                 stopLoading();
-                toast.success('Successfully filtered');
+                toast.success('Filter updated');
             })
             .catch(error => {
                 stopLoading();
@@ -57,20 +66,15 @@ const AllMovies = () => {
             });
     };
 
-    // ================= RATING FILTER =================
-    const handleMoviesByRatings = event => {
-        event.preventDefault();
+    // ================= RATING FILTER (HORIZONTAL SCROLL) =================
+    const handleRatingFilter = (min, max) => {
         startLoading();
 
-        const minRating = event.target.minRating.value;
-        const maxRating = event.target.maxRating.value;
-
-        axiosPublic.get(`/movies?minRating=${minRating}&&maxRating=${maxRating}`)
+        axiosPublic.get(`/movies?minRating=${min}&&maxRating=${max}`)
             .then(res => {
                 setFilteredMovies(res?.data);
-                event.target.reset();
                 stopLoading();
-                toast.success('Successfully filtered');
+                toast.success('Filter updated');
             })
             .catch(error => {
                 stopLoading();
@@ -91,18 +95,18 @@ const AllMovies = () => {
         setFilteredMovies(allMovies);
         setSelectedGenres([]);
         stopLoading();
-        toast.success('Successfully reset');
+        toast.success('All filters cleared');
     };
 
     return (
         <div className='max-w-7xl mx-auto px-4'>
 
             {/* Title */}
-            <h1 className='text-4xl font-bold text-gray-900 text-center mb-8 exceptional-title'>
+            <h1 className='route-title text-3xl font-semibold text-gray-800 tracking-tight text-center mb-6'>
                 All Movies
             </h1>
 
-            {/* ⭐ Mobile filter toggle button */}
+            {/* Mobile filter toggle */}
             <div className='lg:hidden mb-6 flex justify-center'>
                 <button
                     onClick={() => setShowFilters(!showFilters)}
@@ -117,55 +121,63 @@ const AllMovies = () => {
                 {/* ================= SIDEBAR ================= */}
                 <aside className={`
                     lg:w-1/4
-                    ${showFilters ? 'block mb-11 lg:mb-0' : 'hidden'}
+                    ${showFilters ? 'block mb-8 lg:mb-0' : 'hidden'}
                     lg:block
                 `}>
-                    <h2 className='mb-4 text-3xl font-semibold text-gray-800 tracking-tight route-title text-center lg:text-left'>
-                        Filter by Genre
-                    </h2>
 
-                    <div className='space-y-3'>
-                        {genres.map(genre => (
-                            <label
-                                key={genre}
-                                className='flex items-center justify-between form rounded-lg px-4 py-2 cursor-pointer'
-                            >
-                                <span className='font-medium'>{genre}</span>
+                    <div className='lg:sticky lg:top-24'>
+                        <h2 className='text-2xl font-semibold mb-4 text-center lg:text-left'>
+                            Filter by Genre
+                        </h2>
 
-                                <input
-                                    type='checkbox'
-                                    value={genre}
-                                    onChange={handleMoviesByGenres}
-                                    checked={selectedGenres.includes(genre)}
-                                    className='cursor-pointer'
-                                />
-                            </label>
-                        ))}
+                        <div className='space-y-2'>
+                            {genres.map(genre => (
+                                <label
+                                    key={genre}
+                                    className='flex items-center justify-between bg-base-200 hover:bg-base-300 rounded-lg px-4 py-2 cursor-pointer transition form'
+                                >
+                                    <span className='font-medium'>{genre}</span>
+
+                                    <input
+                                        type='checkbox'
+                                        value={genre}
+                                        onChange={handleMoviesByGenres}
+                                        checked={selectedGenres.includes(genre)}
+                                        className='checkbox checkbox-sm'
+                                    />
+                                </label>
+                            ))}
+                        </div>
+
+                        {/* Reset button */}
+                        <button
+                            onClick={resetAllMovies}
+                            className='btn w-full mt-6 secondary-btn btn-neutral rounded-md border border-teal-600 shadow-none bg-transparent hover:bg-teal-50 text-teal-600 hover:text-teal-700 secondary-btn'
+                        >
+                            Reset All Filters
+                        </button>
                     </div>
                 </aside>
 
                 {/* ================= RIGHT CONTENT ================= */}
                 <main className='lg:w-3/4'>
 
-                    {/* Rating filter */}
-                    <div className="card bg-base-100 w-full max-w-sm shrink-0 m-auto form mb-24">
-                        <div className="card-body gap-0">
-                            <h1 className='text-3xl font-semibold text-gray-800 tracking-tight text-center mb-4 route-title'>Filter by Ratings</h1>
-                            <form onSubmit={handleMoviesByRatings}>
-                                <fieldset className="fieldset gap-0">
-                                    <div>
-                                        <label className="label mb-1">Minimum Rating</label>
-                                        <input type="number" step='0.1' min='0' max='10' className="input w-full mb-4" placeholder="Minimum Rating"
-                                            name='minRating' required />
-                                    </div>
-                                    <div>
-                                        <label className="label mb-1">Maximum Rating</label>
-                                        <input type="number" step='0.1' min='0' className='input w-full' placeholder="Maximum Rating" name='maxRating' required />
-                                    </div>
-                                    <button className="btn btn-neutral mt-6 form-btn">Filter</button>
-                                </fieldset>
-                            </form>
-                            <button onClick={resetAllMovies} className="btn btn-neutral rounded-md border border-teal-600 shadow-none mt-3 bg-transparent hover:bg-teal-50 text-teal-600 hover:text-teal-700 secondary-btn">Reset All Movies</button>
+                    {/* ⭐ Horizontal Rating Filter */}
+                    <div className='mb-10'>
+                        <h2 className='text-2xl font-semibold mb-4 text-center lg:text-left'>
+                            Filter by Rating
+                        </h2>
+
+                        <div className='flex gap-3 overflow-x-auto pb-2 scrollbar-hide justify-center lg:justify-start'>
+                            {ratingRanges.map((rating, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => handleRatingFilter(rating.min, rating.max)}
+                                    className='btn btn-sm whitespace-nowrap transition secondary-btn btn-neutral rounded-md border border-teal-600 shadow-none bg-transparent hover:bg-teal-50 text-teal-600 hover:text-teal-700 secondary-btn'
+                                >
+                                    {rating.label}
+                                </button>
+                            ))}
                         </div>
                     </div>
 
@@ -179,11 +191,11 @@ const AllMovies = () => {
                             ))}
                         </section>
                     ) : allMovies.length === 0 ? (
-                        <p className='text-xl text-center font-semibold text-gray-500'>
+                        <p className='text-lg text-center font-semibold opacity-70'>
                             No movies added yet
                         </p>
                     ) : (
-                        <p className='text-xl text-center font-semibold text-gray-500'>
+                        <p className='text-lg text-center font-semibold opacity-70'>
                             No movies match your filters
                         </p>
                     )}

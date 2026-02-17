@@ -109,7 +109,7 @@ body {
   @apply bg-gray-800 border border-gray-700
 }
 
-.dark-theme .input {
+.dark-theme input {
   @apply text-gray-100 bg-gray-700
 }
 
